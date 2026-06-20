@@ -134,6 +134,27 @@
   .submit-btn:hover { opacity: 0.92; }
   .submit-btn:disabled { opacity: 0.6; cursor: default; }
 
+  .consent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 6px;
+    cursor: default;
+  }
+  .consent-row input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: #1B5BB5;
+    cursor: default;
+  }
+  .consent-row span {
+    font-size: 12px;
+    color: #9AAAB9;
+    line-height: 1.5;
+  }
+
   .disclaimer {
     margin-top: 16px;
     font-size: 12px;
@@ -242,8 +263,8 @@
         </div>
 
         <div class="field">
-          <label for="telephone">Téléphone (optionnel)</label>
-          <input type="tel" id="telephone" name="telephone" placeholder="514 000-0000">
+          <label for="telephone">Téléphone*</label>
+          <input type="tel" id="telephone" name="telephone" required placeholder="514 000-0000">
         </div>
 
         <!-- Hidden fields for Formspree -->
@@ -255,6 +276,11 @@
           Recevoir mon guide gratuit
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
+
+        <label class="consent-row">
+          <input type="checkbox" name="consentement" value="Oui" id="consent-check" checked>
+          <span>En demandant mon guide, je consens à être contacté par un conseiller en sécurité financière pour une analyse gratuite et personnalisée de ma situation financière.</span>
+        </label>
       </form>
 
       <p class="disclaimer">Vos renseignements sont confidentiels et ne seront jamais vendus ni partagés.</p>
@@ -287,10 +313,13 @@
   // CONFIGURATION — À REMPLACER PAR DAVID
   // ═══════════════════════════════════════════════════════════════
   var FORMSPREE_ENDPOINT = "https://formspree.io/f/VOTRE_ID_FORMSPREE"; // ← remplacer par ton vrai endpoint Formspree
-  var GUIDE_URL = "https://votresite.com/Guide_Revenu_Retraite_iA.html"; // ← remplacer par le lien public vers le guide
+  var GUIDE_URL = "./Guide_Revenu_Retraite_iA.html"; // chemin relatif — fonctionne si les 2 fichiers sont dans le même repo GitHub Pages
   // ═══════════════════════════════════════════════════════════════
 
   var form = document.getElementById('lead-form');
+  var consentCheck = document.getElementById('consent-check');
+  consentCheck.addEventListener('change', function(){ this.checked = true; });
+  consentCheck.addEventListener('click', function(e){ e.preventDefault(); });
   var submitBtn = document.getElementById('submit-btn');
   var errorMsg = document.getElementById('error-msg');
   var formState = document.getElementById('form-state');
